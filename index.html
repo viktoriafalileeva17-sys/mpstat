@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-решения для Селлеров | Новый мир продаж</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(-45deg, #F0F2F5, #FFFFFF, #E6E9EE, #F0F2F5);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            background-attachment: fixed;
+            color: #374151; /* text-gray-700 */
+        }
+        h1, h2, h3 {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b; /* text-slate-800 */
+        }
+        .chart-container {
+            position: relative; 
+            width: 100%; 
+            max-width: 400px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 280px;
+        }
+        .card-style {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ddd6fe;
+            box-shadow: 0 0 25px rgba(129, 140, 248, 0.6), 0 0 50px rgba(129, 140, 248, 0.3); /* Indigo neon glow */
+            border-radius: 1.5rem; /* rounded-2xl */
+            transition: all 0.3s ease-in-out;
+            backdrop-filter: blur(10px);
+        }
+        .card-style:hover {
+            box-shadow: 0 0 35px rgba(129, 140, 248, 0.8), 0 0 70px rgba(129, 140, 248, 0.5); /* Even stronger glow on hover */
+            transform: translateY(-5px);
+        }
+        
+        /* iPad Frame styles */
+        .ipad-frame {
+            background: #1f2937; /* Black frame for contrast */
+            border-radius: 2.5rem;
+            padding: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2), inset 0 1px 2px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+        .ipad-screen {
+             position: relative;
+             overflow: hidden;
+             border-radius: 1.5rem;
+             background-color: #f8fafc; /* Light screen content */
+             color: #374151; /* Dark text on screen */
+        }
+        .ipad-screen h2, .ipad-screen p {
+            color: #374151;
+        }
+        .ipad-camera {
+            position: absolute;
+            top: 1.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: #334155; /* Darker gray for camera */
+            border-radius: 50%;
+            z-index: 3;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* Анимация появления блоков */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Text colors for light theme */
+        .text-slate-500 { color: #64748b; }
+        .text-slate-800 { color: #1e293b; }
+        .text-indigo-600 { color: #4f46e5; }
+        .text-slate-700 { color: #334155; }
+        .text-slate-600 { color: #475569; }
+
+        /* Specific styles for "Old World" (blue/indigo) */
+        .old-world-card {
+            background: rgba(224, 231, 255, 0.8); /* Light blue transparent */
+            border: 1px solid rgba(79, 70, 229, 0.3); /* Indigo border */
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.6); /* Indigo glow */
+            color: #3f51b5; /* Dark blue text */
+        }
+        .old-world-card h3 {
+            color: #303f9f; /* Darker blue for heading */
+        }
+        .old-world-card h4 {
+            color: #3f51b5; /* Dark blue for subheadings */
+        }
+        .old-world-card p {
+            color: #5c6bc0; /* Slightly lighter blue for text */
+        }
+        .old-world-card .bg-indigo-100 {
+            background-color: rgba(224, 231, 255, 0.5); /* Lighter blue for inner blocks */
+        }
+        .old-world-card .text-indigo-700 {
+            color: #3f51b5;
+        }
+        .old-world-card .text-indigo-600 {
+            color: #5c6bc0;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+
+        <header class="text-center my-8 md:my-16 fade-in-up">
+            <h1 class="text-4xl md:text-6xl font-black mb-2 text-slate-800">Это НОВЫЙ МИР продаж</h1>
+            <h2 class="text-2xl md:text-3xl font-bold text-indigo-600 mb-4">AI-продажник: +20% к прибыли и свобода от маркетплейсов</h2>
+        </header>
+
+        <div class="ipad-frame mb-12 fade-in-up">
+             <div class="ipad-camera"></div>
+             <section id="slide1" class="ipad-screen text-center p-8 md:p-12">
+                <div class="hero-content">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4">Хватит отдавать 30% прибыли маркетплейсам</h2>
+                    <div class="text-7xl md:text-9xl font-black my-6 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 animate-pulse">
+                        +20%
+                    </div>
+                    <p class="text-slate-500 max-w-2xl mx-auto">Запустите своего <span class="font-bold text-indigo-600">AI-продавца</span>, который продает 24/7 на вашем собственном сайте, пока вы ищете новый товар.</p>
+                </div>
+            </section>
+        </div>
+        
+        <section id="old-world" class="mb-12 fade-in-up">
+            <div class="card-style old-world-card p-6 md:p-8 rounded-xl">
+                 <h3 class="text-2xl md:text-3xl font-bold mb-4 text-center text-blue-800">Старый мир рухнул! 💥 (Рабство у маркетплейсов)</h3>
+                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="bg-indigo-100 bg-opacity-30 p-4 rounded-lg">
+                        <h4 class="font-bold text-indigo-700">ОГРОМНЫЕ КОМИССИИ 💰</h4>
+                        <p class="text-sm text-indigo-600">До 30-40% вашей выручки</p>
+                    </div>
+                    <div class="bg-indigo-100 bg-opacity-30 p-4 rounded-lg">
+                        <h4 class="font-bold text-indigo-700">СТРАХ БЛОКИРОВКИ 🚫</h4>
+                        <p class="text-sm text-indigo-600">Бизнес могут остановить в любой момент</p>
+                    </div>
+                    <div class="bg-indigo-100 bg-opacity-30 p-4 rounded-lg">
+                        <h4 class="font-bold text-indigo-700">ЧУЖАЯ КЛИЕНТСКАЯ БАЗА 🤷‍♂️</h4>
+                        <p class="text-sm text-indigo-600">Вы не знаете своих покупателей</p>
+                    </div>
+                     <div class="bg-indigo-100 bg-opacity-30 p-4 rounded-lg">
+                        <h4 class="font-bold text-indigo-700">ПОСТОЯННЫЙ ДЕМПИНГ 📉</h4>
+                        <p class="text-sm text-indigo-600">Единственный метод конкуренции</p>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+        <main class="space-y-12">
+
+            <div class="card-style p-6 md:p-8 rounded-xl fade-in-up">
+                <h3 class="text-2xl md:text-3xl font-bold mb-2 text-indigo-600">ШАГ 1: AI-СКАНЕР (Получаем "горячего" клиента) 🎯</h3>
+                <p class="text-lg font-semibold text-slate-800 mb-4">Увеличьте конверсию вашего сайта в 3 раза! 🚀</p>
+                <p class="text-slate-500 mb-6">Клиент заходит на ваш сайт/соцсеть и видит не "купить", а "получить мгновенный расчет" (например, стоимости доставки ВЭД) или "подобрать товар по фото". Он моментально получает **"ВАУ-эффект"** ✨ и с радостью оставляет контакты. Больше никаких "мы свяжемся с вами в течение 24 часов"! ⏱️</p>
+                <div class="chart-container">
+                    <canvas id="conversionChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card-style p-6 md:p-8 rounded-xl fade-in-up">
+                <h3 class="text-2xl md:text-3xl font-bold mb-2 text-indigo-600">ШАГ 2: AI-ПРОДАВЕЦ (Отвечаем за 60 секунд 24/7) 🤖</h3>
+                <p class="text-lg font-semibold text-slate-800 mb-4">Снижаем рутину менеджеров в 10 раз. 👇</p>
+                 <p class="text-slate-500 mb-6">AI-продавец мгновенно подхватывает лида. Он отвечает на вопросы, отрабатывает возражения ("дорого", "долго", "а что с гарантией?") и "дожимает" клиента до покупки. Он никогда не спит 😴, не болеет 🤒, не выгорает 😩 и работает по вашему **лучшему скрипту 24/7** 📈.</p>
+                <div class="chart-container">
+                    <canvas id="routineChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card-style p-6 md:p-8 rounded-xl fade-in-up">
+                <h3 class="text-2xl md:text-3xl font-bold mb-2 text-indigo-600">ШАГ 3: AI-АНАЛИТИК (Растим прибыль +20%) ❤️</h3>
+                <p class="text-lg font-semibold text-slate-800 mb-4">Увеличьте пожизненную ценность клиента (LTV) на 60%. 🤑</p>
+                <p class="text-slate-500 mb-6">После первой покупки AI не забывает клиента. Он автоматически предлагает сопутствующие товары (cross-sell), более дорогие версии (up-sell) и возвращает "уснувших" специальными офферами. Вся прибыль идет вам в карман, а не маркетплейсу. 💸</p>
+                 <div class="flex items-center space-x-4 mb-6">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Zappos_logo.svg/1200px-Zappos_logo.svg.png" alt="Zappos Logo" class="h-12 w-auto">
+                    <p class="text-slate-500 italic">**Пример:** Как Zappos 👟 построил миллиардный бизнес, фокусируясь на LTV и безупречном сервисе. Теперь это доступно и вам! 💪</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="profitGrowthChart"></canvas>
+                </div>
+            </div>
+        </main>
+        
+        <section id="results" class="mt-16 fade-in-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 text-slate-800">Что вы получите в итоге?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-slate-600">
+                <div class="card-style p-6 rounded-2xl">
+                    <h3 class="text-2xl font-bold mb-2 text-indigo-600">🚀 СВОБОДА</h3>
+                    <ul class="space-y-2 list-disc list-inside text-slate-700">
+                        <li>**Вы перестаете быть заложником маркетплейсов.** ⛓️</li>
+                        <li>**Вы строите свой собственный, независимый бренд.** 👑</li>
+                        <li>**Ваша клиентская база принадлежит только вам.** 🔒</li>
+                    </ul>
+                </div>
+                <div class="card-style p-6 rounded-2xl">
+                    <h3 class="text-2xl font-bold mb-2 text-indigo-600">💰 ПРИБЫЛЬ</h3>
+                     <ul class="space-y-2 list-disc list-inside text-slate-700">
+                        <li>**+20% к чистой прибыли** за счет прямых продаж. 📈</li>
+                        <li>**Снижение ФОТ:** AI заменяет 2-3 менеджеров первой линии. ⬇️</li>
+                        <li>**Рост LTV:** Вы зарабатываете на клиентах повторно, а не платите за их привлечение снова. 🔄</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="mt-16 text-center fade-in-up">
+            <div class="card-style p-8 md:p-12 rounded-2xl">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-800">Готовы войти в "Новый мир" продаж?</h2>
+                <p class="text-slate-500 mb-8 max-w-xl mx-auto">Подойдите ко мне после выступления или свяжитесь напрямую в Telegram, и я покажу вам живую демонстрацию AI-продавца.</p>
+                <a href="https://t.me/nikolfl" target="_blank" rel="noopener noreferrer" class="inline-block bg-indigo-600 text-white font-bold text-lg px-8 py-4 rounded-xl shadow-lg hover:bg-indigo-700 transform hover:-translate-y-1 transition-all duration-300">
+                    Обсудить проект в Telegram 🚀
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.fade-in-up');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    animatedElements.forEach(el => {
+        observer.observe(el);
+    });
+
+    const wrapLabel = (label) => {
+        const maxLength = 16;
+        if (label.length <= maxLength) { return label; }
+        const words = label.split(' ');
+        const lines = [];
+        let currentLine = '';
+        for (const word of words) {
+            if ((currentLine + ' ' + word).trim().length > maxLength) {
+                lines.push(currentLine.trim());
+                currentLine = word;
+            } else {
+                currentLine = (currentLine + ' 'G + word).trim();
+            }
+        }
+        if (currentLine) { lines.push(currentLine.trim()); }
+        return lines;
+    };
+
+    const tooltipTitleCallback = (tooltipItems) => {
+        const item = tooltipItems[0];
+        let label = item.chart.data.labels[item.dataIndex];
+        return Array.isArray(label) ? label.join(' ') : label;
+    };
+
+    const commonChartOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+            legend: { labels: { color: '#374151' } },
+            tooltip: { callbacks: { title: tooltipTitleCallback } }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                ticks: { color: '#4B5563' }
+            },
+            x: {
+                grid: { display: false },
+                ticks: { color: '#4B5563' }
+            }
+        }
+    };
+    
+    // CHART 1: Воронка конверсии (Bar Chart)
+    new Chart(document.getElementById('conversionChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Посетители сайта', 'Заявки (AI-сканер)', 'Заявки (стандарт)'].map(wrapLabel),
+            datasets: [{
+                label: 'Конверсия',
+                data: [1000, 300, 50], // 1000 посетителей, 300 заявок с AI, 50 со стандарта
+                backgroundColor: ['#c7d2fe', '#4f46e5', '#9ca3af'],
+                borderColor: ['#a5b4fc', '#3730a3', '#6b7280'],
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            ...commonChartOptions,
+            plugins: { ...commonChartOptions.plugins, legend: { display: false } },
+            scales: {
+                ...commonChartOptions.scales,
+                y: { ...commonChartOptions.scales.y, title: { display: true, text: 'Количество клиентов', color: '#4B5563' } }
+            }
+        }
+    });
+
+    // CHART 2: Рутина (Stacked Bar Chart)
+    new Chart(document.getElementById('routineChart'), {
+        type: 'bar',
+        data: {
+            labels: ['ДО AI', 'ПОСЛЕ AI'],
+            datasets: [
+                {
+                    label: 'Рутина (квалификация, ответы)',
+                    data: [90, 10],
+                    backgroundColor: '#9ca3af', // Gray
+                    borderRadius: 5
+                },
+                {
+                    label: 'Продажи (звонки, сделки)',
+                    data: [10, 90],
+                    backgroundColor: '#4f46e5', // Indigo
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            ...commonChartOptions,
+            plugins: {
+                ...commonChartOptions.plugins,
+                legend: { position: 'bottom', labels: { color: '#374151' } },
+                title: { display: true, text: 'Трансформация времени менеджера', color: '#1e293b', font: { size: 16, weight: 'bold' } }
+            },
+            scales: {
+                x: { stacked: true, grid: { display: false } },
+                y: { stacked: true, ticks: { callback: value => value + '%' } }
+            }
+        }
+    });
+
+    // CHART 3: Рост LTV (Line Chart)
+    new Chart(document.getElementById('profitGrowthChart'), {
+        type: 'line',
+        data: {
+            labels: ['Месяц 1', 'Месяц 6', 'Месяц 12', 'Месяц 18'],
+            datasets: [{
+                label: 'Прибыль с AI-допродажами',
+                data: [100, 120, 145, 160],
+                borderColor: '#4f46e5', /* Indigo */
+                backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#4f46e5'
+            }, {
+                label: 'Прибыль без AI (нет LTV)',
+                data: [100, 100, 100, 100],
+                borderColor: '#9ca3af', /* Gray */
+                backgroundColor: 'rgba(156, 163, 175, 0.2)',
+                fill: true,
+                tension: 0.4,
+                borderDash: [5, 5],
+                pointBackgroundColor: '#9ca3af'
+            }]
+        },
+        options: {
+            ...commonChartOptions,
+            scales: { 
+                y: { 
+                    ...commonChartOptions.scales.y, 
+                    ticks: { 
+                        ...commonChartOptions.scales.y.ticks, 
+                        callback: value => value + '%'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Рост LTV клиента',
+                        color: '#4B5563'
+                    }
+                },
+                x: {
+                    ...commonChartOptions.scales.x,
+                    title: {
+                        display: true,
+                        text: 'Время',
+                        color: '#4B5563'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+
+</body>
+</html>
