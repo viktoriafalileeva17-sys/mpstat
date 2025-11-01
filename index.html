@@ -197,7 +197,7 @@
                 <p class="text-lg font-semibold text-slate-800 mb-4">Увеличьте пожизненную ценность клиента (LTV) на 60%. 🤑</p>
                 <p class="text-slate-500 mb-6">После первой покупки AI не забывает клиента. Он автоматически предлагает сопутствующие товары (cross-sell), более дорогие версии (up-sell) и возвращает "уснувших" специальными офферами. Вся прибыль идет вам в карман, а не маркетплейсу. 💸</p>
                  <div class="flex items-center space-x-4 mb-6">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Zappos_logo.svg/1200px-Zappos_logo.svg.png" alt="Zappos Logo" class="h-12 w-auto">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Zappos_logo.svg/1200px-Zappos_logo.svg.png" alt="Zappos Logo" class="h-12 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x40/E2E8F0/94A3B8?text=ZAPPOS';">
                     <p class="text-slate-500 italic">**Пример:** Как Zappos 👟 построил миллиардный бизнес, фокусируясь на LTV и безупречном сервисе. Теперь это доступно и вам! 💪</p>
                 </div>
                 <div class="chart-container">
@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 lines.push(currentLine.trim());
                 currentLine = word;
             } else {
-                currentLine = (currentLine + ' 'G + word).trim();
+                currentLine = (currentLine + ' ' + word).trim();
             }
         }
         if (currentLine) { lines.push(currentLine.trim()); }
